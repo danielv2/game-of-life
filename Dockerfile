@@ -5,7 +5,7 @@ COPY ./ .
 
 RUN dotnet restore
 RUN dotnet publish -c Release ./GOF.Host --output /app/ --no-restore
-RUN dotnet ef database update --project GOF.Host --no-build --no-restore
+RUN dotnet ef database update
 
 FROM  mcr.microsoft.com/dotnet/aspnet:7.0 as base
 
