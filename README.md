@@ -2,8 +2,6 @@
 
 An API built using **.NET Core** to simulate Conway's Game of Life. The API allows you to create, update, and retrieve the states of the game as it evolves over generations based on a set of predefined rules.
 
-![Game of Life Example](https://www.researchgate.net/profile/Kuo-Chen-Chou/publication/51519427/figure/fig2/AS:601719025192961@1520472403348/Fig-5-Two-dimensional-cellular-automaton-Conways-game-of-life_Q320.jpg)
-
 ## **Table of Contents**
 
 - [Features](#features)
