@@ -6,6 +6,9 @@ using GOF.Domain.Models.GameModel.Request;
 
 namespace GOF.Domain.Models.GameModel.Validators
 {
+    /// <summary>
+    /// PostGameRequestValidator class
+    /// </summary>
     public class PostGameRequestValidator : GameModelValidatorBase<PostGameRequest>
     {
         public PostGameRequestValidator() : base()

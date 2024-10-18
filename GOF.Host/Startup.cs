@@ -14,8 +14,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GOF.Host
 {
+    /// <summary>
+    /// Startup class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +30,9 @@ namespace GOF.Host
 
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Configure the services
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -43,6 +53,9 @@ namespace GOF.Host
                 .AddCheck("API Health Check", () => HealthCheckResult.Healthy());
         }
 
+        /// <summary>
+        /// Configure the application
+        /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())

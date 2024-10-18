@@ -14,6 +14,9 @@ using Microsoft.Extensions.Logging;
 
 namespace GOF.Host.Controllers
 {
+    /// <summary>
+    /// Game Controller
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/games")]
@@ -30,7 +33,7 @@ namespace GOF.Host.Controllers
         }
 
         /// <summary>
-        /// Get All Gales
+        /// Get All Games
         /// </summary>
         /// <returns>The Games list</returns>
         /// <response code="200">Success - The request has succeeded.</response>
@@ -48,14 +51,45 @@ namespace GOF.Host.Controllers
         [Consumes("application/json")]
         public async Task<ActionResult> GetAll()
         {
-            var result = await _service.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<GetGameResponse>>(result));
+            try
+            {
+                var result = await _service.GetAllAsync();
+                return Ok(_mapper.Map<IEnumerable<GetGameResponse>>(result));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
+        /// <summary>
+        /// Get Game by Id
+        /// </summary>
+        /// <returns>The Specific Game</returns>
+        /// <response code="200">Success - The request has succeeded.</response>
+        /// <response code="400">Bad Request – This means that client-side input fails validation.</response>
+        /// <response code="403">Forbidden – This means the user is authenticated, but it’s not allowed to access a resource.</response>
+        /// <response code="412">Precondition Failed - The client has indicated preconditions in its headers which the server does not meet.</response>
+        /// <response code="422">Unprocessable Entity - The request was well-formed but was unable to be followed due to semantic errors.</response>
+        /// <response code="500">Internal Server Error - The server has encountered a situation it doesn't know how to handle.</response>
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [ProducesResponseType(typeof(GetGameResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDetailResponse), StatusCodes.Status412PreconditionFailed)]
+        [ProducesResponseType(typeof(ErrorDetailResponse), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorDetailResponse), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        public async Task<ActionResult> GetById([FromRoute] Guid id)
         {
-            return Ok($"Game of Life {id}");
+            try
+            {
+                var result = await _service.GetByIdAsync(id);
+                return Ok(_mapper.Map<GetGameResponse>(result));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -80,9 +114,16 @@ namespace GOF.Host.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _service.CreateAsync(_mapper.Map<Domain.Entities.GameEntity>(model));
+                try
+                {
+                    var result = await _service.CreateAsync(_mapper.Map<Domain.Entities.GameEntity>(model));
 
-                return Ok(_mapper.Map<PostGameResponse>(result));
+                    return Ok(_mapper.Map<PostGameResponse>(result));
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
 
             return BadRequest(ModelState);
@@ -92,6 +133,8 @@ namespace GOF.Host.Controllers
         /// Get Next Game Stage
         /// </summary>
         /// <param name="id">Game Id</param>
+        /// <param name="quantity">Quantity of stages</param>
+        /// <param name="lastState">Last State</param>
         /// <returns>The Game Stage</returns>
         /// <response code="201">Created - The request has succeeded and a new resource has been created as a result of it. This is typically the response sent after a POST request, or after some PUT requests.</response>
         /// <response code="400">Bad Request – This means that client-side input fails validation.</response>
@@ -100,31 +143,32 @@ namespace GOF.Host.Controllers
         /// <response code="422">Unprocessable Entity - The request was well-formed but was unable to be followed due to semantic errors.</response>
         /// <response code="500">Internal Server Error - The server has encountered a situation it doesn't know how to handle.</response>
         [HttpGet("{id}/next")]
-        [ProducesResponseType(typeof(GetGameStageResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<GetGameStageResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetailResponse), StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(typeof(ErrorDetailResponse), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorDetailResponse), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Consumes("application/json")]
-        public async Task<ActionResult> GetNext([FromRoute][Required] Guid id)
+        public async Task<ActionResult> GetNext([FromRoute][Required] Guid id, [FromQuery] int quantity = 1, [FromQuery] bool lastState = false)
         {
             if (ModelState.IsValid)
             {
-                var result = await _service.GetNextAsync(id, 1);
+                try
+                {
+                    var result = await _service.GetNextAsync(id, quantity, lastState);
 
-                if (result == null)
-                    return NotFound(new { id });
-                else
-                    return Ok(_mapper.Map<GetGameStageResponse>(result));
+                    if (result == null)
+                        return NotFound(new { id });
+                    else
+                        return Ok(_mapper.Map<IEnumerable<GetGameStageResponse>>(result));
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
 
             return BadRequest(ModelState);
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            return Ok($"Game of Life {id}");
         }
     }
 }

@@ -2,6 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GOF.Domain.Entities
 {
+    /// <summary>
+    /// GameStageEntity class
+    /// </summary>
+    /// <remarks>
+    /// This class represents a game of life stage entity.
+    /// </remarks>
     public class GameStageEntity
     {
         [Key]

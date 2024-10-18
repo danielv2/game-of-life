@@ -6,6 +6,9 @@ using GOF.Domain.Models.GameStageModel.Response;
 
 namespace GOF.Domain.Mapping
 {
+    /// <summary>
+    /// GameMapping class
+    /// </summary>
     public class GameStageMapping : Profile
     {
         public GameStageMapping()

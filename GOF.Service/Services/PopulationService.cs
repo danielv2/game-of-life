@@ -3,6 +3,10 @@ using Microsoft.Extensions.Logging;
 
 namespace GOF.Service.Services
 {
+    /// <summary>
+    /// PopulationService class that implements IPopulationService
+    /// </summary>
+    /// <seealso cref="IPopulationService" />
     public class PopulationService : IPopulationService
     {
         private readonly ILogger<GameService> _logger;
@@ -12,19 +16,38 @@ namespace GOF.Service.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Generates a population board.
+        /// </summary>
+        /// <remarks
+        /// The population board is a square matrix with the same number of rows and columns.
+        /// Each cell of the matrix can be either alive (1) or dead (0).
+        /// </remarks>
+        /// <param name="squareSideSize"></param>
+        /// <param name="initialState"></param>
+        /// <returns></returns>
         public List<List<int>> GeneratePopulationBoardAsync(int squareSideSize, List<List<int>>? initialState)
         {
             _logger.LogInformation("[PopulationService] Generating population board");
 
-            if (initialState == null)
+            if (initialState == null || initialState?.Count == 0)
             {
                 _logger.LogInformation("[PopulationService] Generating random population board");
+
                 return GenerateRandomBoard(squareSideSize);
             }
 
             return FillBoardWithInitialState(squareSideSize, initialState);
         }
 
+        /// <summary>
+        /// Generates the next generation of the population board.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="squareSideSize"></param>
+        /// <returns>
+        /// The next generation of the population board.
+        /// </returns>
         public List<List<int>> NextGeneration(List<List<int>> board, int squareSideSize)
         {
             List<List<int>> newBoard = CreateEmptyBoard(squareSideSize, squareSideSize);
@@ -35,15 +58,17 @@ namespace GOF.Service.Services
                 {
                     int aliveNeighbors = CountAliveNeighbors(board, i, j);
 
-                    // Regras do jogo
+                    // Rules of the game
+                    // Any live cell with fewer than two live neighbors dies (underpopulation).
+                    // Any live cell with two or three live neighbors lives on to the next generation (survival).
+                    // Any live cell with more than three live neighbors dies (overpopulation).
+                    // Any dead cell with exactly three live neighbors becomes a live cell (reproduction).
                     if (board[i][j] == 1)
                     {
-                        // Célula viva continua viva se tiver 2 ou 3 vizinhos vivos
                         newBoard[i][j] = (aliveNeighbors == 2 || aliveNeighbors == 3) ? 1 : 0;
                     }
                     else
                     {
-                        // Célula morta torna-se viva se tiver exatamente 3 vizinhos vivos
                         newBoard[i][j] = (aliveNeighbors == 3) ? 1 : 0;
                     }
                 }
@@ -52,25 +77,33 @@ namespace GOF.Service.Services
             return newBoard;
         }
 
+        /// <summary>
+        /// Counts the number of alive neighbors of a cell.
+        /// Considering the cell at position (row, col) in the board and diagonals.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         private int CountAliveNeighbors(List<List<int>> board, int row, int col)
         {
             int alive = 0;
 
-            int[] directions = { -1, 0, 1 };
-
-            foreach (int dx in directions)
+            for (int i = -1; i <= 1; i++)
             {
-                foreach (int dy in directions)
+                for (int j = -1; j <= 1; j++)
                 {
-                    if (dx == 0 && dy == 0)
+                    int neighborRow = row + i;
+                    int neighborCol = col + j;
+
+                    // Ignore the cell itself
+                    if (i == 0 && j == 0)
                         continue;
 
-                    int newRow = row + dx;
-                    int newCol = col + dy;
-
-                    if (newRow >= 0 && newRow < board.Count && newCol >= 0 && newCol < board[0].Count)
+                    // Verify if the neighbor is on the board and if it is alive
+                    if (neighborRow >= 0 && neighborRow < board.Count && neighborCol >= 0 && neighborCol < board[0].Count)
                     {
-                        alive += board[newRow][newCol];
+                        alive += board[neighborRow][neighborCol];
                     }
                 }
             }
@@ -78,7 +111,11 @@ namespace GOF.Service.Services
             return alive;
         }
 
-        // Método para gerar um estado inicial aleatório
+        /// <summary>
+        /// Generates a random population board.
+        /// </summary>
+        /// <param name="SquareSideSize"></param>
+        /// <returns></returns>
         private List<List<int>> GenerateRandomBoard(int SquareSideSize)
         {
             Random random = new Random();
@@ -88,14 +125,19 @@ namespace GOF.Service.Services
             {
                 for (int j = 0; j < SquareSideSize; j++)
                 {
-                    board[i][j] = random.Next(0, 2); // Gera 0 ou 1 aleatoriamente
+                    board[i][j] = random.Next(0, 2); // Generate a random number between 0 and 1
                 }
             }
 
             return board;
         }
 
-        // Método auxiliar para criar uma nova lista aninhada (tabuleiro vazio)
+        /// <summary>
+        /// Creates an empty board with the specified number of rows and columns.
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
         private List<List<int>> CreateEmptyBoard(int rows, int columns)
         {
             var board = new List<List<int>>();
@@ -107,13 +149,19 @@ namespace GOF.Service.Services
             return board;
         }
 
+        /// <summary>
+        /// Fills the board with the initial state.
+        /// </summary>
+        /// <param name="SquareSideSize"></param>
+        /// <param name="initialState"></param>
+        /// <returns></returns>
         private List<List<int>> FillBoardWithInitialState(int SquareSideSize, List<List<int>>? initialState)
         {
             List<List<int>> board = CreateEmptyBoard(SquareSideSize, SquareSideSize);
 
             for (int i = 0; i < SquareSideSize; i++)
             {
-                if (i >= initialState.Count)
+                if (i >= initialState?.Count)
                     break;
 
                 for (int j = 0; j < SquareSideSize; j++)

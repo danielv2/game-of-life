@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GOF.Infra.Context
 {
+    /// <summary>
+    /// SQLiteDbContext class
+    /// </summary>
     public class SQLiteDbContext : DbContext
     {
         public DbSet<GameEntity> GameEntity { get; set; }
@@ -15,6 +18,10 @@ namespace GOF.Infra.Context
         {
         }
 
+        /// <summary>
+        /// OnModelCreating method to configure the models and relationships
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var converter = new ValueConverter<List<List<int>>, string>(

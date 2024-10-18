@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GOF.Infra.Repositories
 {
+    /// <summary>
+    /// RepositoryBase class that implements IRepositoryBase
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected readonly SQLiteDbContext _context;
@@ -36,7 +40,7 @@ namespace GOF.Infra.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
             if (entity != null)

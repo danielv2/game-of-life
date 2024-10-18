@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace GOF.Domain.Models.ErrorDetailModel.Response
 {
+    /// <summary>
+    /// ErrorDetailResponse class
+    /// </summary>
     public class ErrorDetailResponse
     {
         public ErrorDetailResponse()

@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOF.Application", "GOF.Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOF.IoC", "GOF.IoC\GOF.IoC.csproj", "{5EE6390F-D9A8-4DEA-B3D2-11759B1598FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOF.Tests", "GOF.Tests\GOF.Tests.csproj", "{9E810F75-9776-476F-AC64-C71266065AA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOF.IntegrationTests", "GOF.IntegrationTests\GOF.IntegrationTests.csproj", "{644897A5-8985-43A0-A2EA-A64B5B395A55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +52,13 @@ Global
 		{5EE6390F-D9A8-4DEA-B3D2-11759B1598FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EE6390F-D9A8-4DEA-B3D2-11759B1598FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EE6390F-D9A8-4DEA-B3D2-11759B1598FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E810F75-9776-476F-AC64-C71266065AA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E810F75-9776-476F-AC64-C71266065AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E810F75-9776-476F-AC64-C71266065AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E810F75-9776-476F-AC64-C71266065AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{644897A5-8985-43A0-A2EA-A64B5B395A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{644897A5-8985-43A0-A2EA-A64B5B395A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{644897A5-8985-43A0-A2EA-A64B5B395A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{644897A5-8985-43A0-A2EA-A64B5B395A55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

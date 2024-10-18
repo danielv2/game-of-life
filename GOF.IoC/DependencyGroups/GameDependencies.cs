@@ -12,6 +12,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GOF.IoC.DependencyGroups
 {
+    /// <summary>
+    /// GameDependencies class that implements IDependencyGroup
+    /// </summary>
+    /// <seealso cref="IDependencyGroup" />
+    /// <remarks>
+    /// This class is used to register all dependencies related to the Game entity
+    /// </remarks>
     public class GameDependencies : IDependencyGroup
     {
         public void Register(IServiceCollection services)

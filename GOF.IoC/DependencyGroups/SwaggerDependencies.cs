@@ -7,6 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GOF.IoC.DependencyGroups
 {
+    /// <summary>
+    /// SwaggerDependencies class that implements IDependencyGroup
+    /// </summary>
+    /// <seealso cref="IDependencyGroup" />
+    /// <remarks>
+    /// This class is used to register all dependencies related to the Swagger entity
+    /// </remarks>
     public class SwaggerDependencies : IDependencyGroup
     {
         public void Register(IServiceCollection services)

@@ -6,17 +6,33 @@ using Microsoft.Extensions.Logging;
 
 namespace GOF.Host
 {
+    /// <summary>
+    /// Main class of the application
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        ///  Get the port from the environment variable
+        /// </summary>
         protected static string Port
         {
             get { return Environment.GetEnvironmentVariable("PORT", EnvironmentVariableTarget.Process); }
         }
+
+        /// <summary>
+        /// Main method of the application
+        /// </summary>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
 
         }
+
+        /// <summary>
+        /// Create the host builder
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>

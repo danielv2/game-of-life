@@ -6,6 +6,13 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace GOF.IoC.DependencyGroups
 {
+    /// <summary>
+    /// VersioningDependencies class that implements IDependencyGroup
+    /// </summary>
+    /// <seealso cref="IDependencyGroup" />
+    /// <remarks>
+    /// This class is used to register all dependencies related to the Versioning entity
+    /// </remarks>
     public class VersioningDependencies : IDependencyGroup
     {
         public void Register(IServiceCollection services)

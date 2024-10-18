@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace GOF.Application.DependencyGroups
 {
+    /// <summary>
+    /// Interface for dependency groups
+    /// </summary>
     public interface IDependencyGroup
     {
         void Register(IServiceCollection serviceCollection);
