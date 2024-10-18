@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/GOF.Host/bin/Debug/net7.0/GOF.Host.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/GOF.Host",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "launchBrowser": {
+        "enabled": true,
+        "args": "${auto-detect-url}/swagger",
+        "windows": {
+          "command": "cmd.exe",
+          "args": "/C start ${auto-detect-url}"
+        },
+        "osx": {
+          "command": "open"
+        },
+        "linux": {
+          "command": "xdg-open"
+        },
+      },
+      "env": {
+        "PORT": "5000",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  ]
+}
