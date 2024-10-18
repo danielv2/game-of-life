@@ -26,7 +26,13 @@ An API built using **.NET Core** to simulate Conway's Game of Life. The API allo
 
 ## **API Demo in Production**
 
+### Swagger
+
 https://game-of-life-production-de86.up.railway.app/index.html
+
+### Simple Front End consuming API
+
+https://game-of-life-ui-production.up.railway.app/
 
 ## **Getting Started**
 
