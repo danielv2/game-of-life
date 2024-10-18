@@ -1,7 +1,9 @@
 
 using System.IO;
 using GOF.Domain.Configurations;
+using GOF.Infra.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -41,6 +43,13 @@ namespace GOF.Host.Controllers
             }
 
             return NotFound(new { Message = "Directory not found.", ConnectionString = connectionString });
+        }
+
+        [HttpGet("list-tables")]
+        public IActionResult ListTables([FromServices] SQLiteDbContext context)
+        {
+            var tables = context.Database.ExecuteSqlRaw("SELECT name FROM sqlite_master WHERE type='table';");
+            return Ok(tables);
         }
     }
 }
