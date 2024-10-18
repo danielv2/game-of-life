@@ -20,10 +20,10 @@ RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
 # Copiar o script de entrypoint
-COPY entrypoint.sh /app/entrypoint.sh
+COPY deploy/entrypoint.sh /app/entrypoint.sh
 
 # Dar permissão para o script ser executável
 RUN chmod +x /app/entrypoint.sh
 
 # Usar o script como entrypoint
-ENTRYPOINT ["/deploy/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
