@@ -12,6 +12,7 @@ RUN dotnet ef database update --project GOF.Host --startup-project GOF.Host
 FROM  mcr.microsoft.com/dotnet/aspnet:7.0 as base
 
 WORKDIR /app
+VOLUME ["/app/data"]
 COPY --from=builder /app .
 
 ENTRYPOINT ["dotnet", "GOF.Host.dll"]

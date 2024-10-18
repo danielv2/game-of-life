@@ -36,8 +36,9 @@ namespace GOF.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SQLiteDbContext>(options =>
-                options.UseSqlite("Data Source=game-of-life.db"));
+                options.UseSqlite(connectionString));
             services.AddControllers();
             services.AddCors();
             services.AddFluentValidationAutoValidation();
