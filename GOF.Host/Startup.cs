@@ -57,8 +57,10 @@ namespace GOF.Host
         /// <summary>
         /// Configure the application
         /// </summary>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider, SQLiteDbContext context)
         {
+            context.Database.Migrate();
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
